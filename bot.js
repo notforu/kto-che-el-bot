@@ -3,7 +3,7 @@ const User = require('./models/user');
 const Message = require('./models/message');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
-const { getRandomDishAbbreviation } = require('./helpers');
+const { getRandomDishAbbreviation, cheEllable, getPhrasePrefix } = require('./helpers');
 
 const Bot = require('node-telegram-bot-api');
 let bot;
@@ -27,8 +27,8 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 			}
 			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id: msg.chat.id });
 
-			if (msg.text.includes('@CheElBot')) {
-				bot.sendMessage(chatId, `я ел ${getRandomDishAbbreviation()}`);
+			if (msg.text.includes('@CheElBot') && cheEllable(msg.text)) {
+				bot.sendMessage(chatId, `${getPhrasePrefix()} ${getRandomDishAbbreviation()}`);
 			}
 		});
 	})

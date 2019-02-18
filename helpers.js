@@ -24,6 +24,10 @@ const listOfAbbreviations = [
 	'я'
 ];
 
+const phrasePrefixes = ['у меня', 'сёдня', 'я ел', 'добавилось', 'ел'];
+
+const getPhrasePrefix = () => phrasePrefixes[getRandomInt(0, phrasePrefixes.length - 1)];
+
 const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -38,4 +42,6 @@ const getRandomDishAbbreviation = () => {
 	return `${ingredientOne}c${ingredientTwo}и${ingredientThree}`;
 }
 
-module.exports = { getRandomArrayElement, getRandomDishAbbreviation };
+const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.includes(cheEl));
+
+module.exports = { getRandomArrayElement, getRandomDishAbbreviation, cheEllable, getPhrasePrefix };
