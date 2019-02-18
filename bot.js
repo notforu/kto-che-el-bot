@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
   	bot = new Bot(token, { polling: true });
 }
 
-mongoose.connect(`mongodb://cheelUser:${encodeURIComponent('$hf18faBNDf&91')}@cheel-shard-00-00-nuead.mongodb.net:27017,cheel-shard-00-01-nuead.mongodb.net:27017,cheel-shard-00-02-nuead.mongodb.net:27017/test?ssl=true&replicaSet=cheel-shard-0&authSource=admin&retryWrites=true`)
+mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}@cheel-shard-00-00-nuead.mongodb.net:27017,cheel-shard-00-01-nuead.mongodb.net:27017,cheel-shard-00-02-nuead.mongodb.net:27017/test?ssl=true&replicaSet=cheel-shard-0&authSource=admin&retryWrites=true`)
 	.then(() => {
 		console.log('Bot server started in the ' + process.env.NODE_ENV + ' mode');
 
