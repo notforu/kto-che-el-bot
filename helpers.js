@@ -24,7 +24,7 @@ const listOfAbbreviations = [
 	'я'
 ];
 
-const phrasePrefixes = ['у меня', 'сёдня', 'я ел', 'добавилось', 'ел'];
+const phrasePrefixes = ['у меня', 'сёдня', 'я ел', 'добавилось', 'ел', 'поел'];
 
 const getPhrasePrefix = () => phrasePrefixes[getRandomInt(0, phrasePrefixes.length - 1)];
 
@@ -39,7 +39,7 @@ const getRandomDishAbbreviation = () => {
 	const ingredientOne = listOfAbbreviations[getRandomInt(0, max)];
 	const ingredientTwo = listOfAbbreviations[getRandomInt(0, max)];
 	const ingredientThree = listOfAbbreviations[getRandomInt(0, max)];
-	return `${ingredientOne}c${ingredientTwo}и${ingredientThree}`;
+	return `${ingredientOne}${ingredientTwo}${ingredientThree}`;
 }
 
 const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.includes(cheEl));
