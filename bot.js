@@ -26,6 +26,10 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 				await User.create({ ...msg.from, chat_id: msg.chat.id });
 			}
 			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id: msg.chat.id });
+
+			if (msg.text.includes('@CheElBot')) {
+				bot.sendMessage(chatId, `я ел ${getRandomDishAbbreviation()}`);
+			}
 		});
 	})
 

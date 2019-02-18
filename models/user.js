@@ -31,11 +31,11 @@ const UserSchema = new mongoose.Schema({
 	},
 	last_name: {
 		type: String,
-		required: true
+		required: false
 	},
 	username: {
 		type: String,
-		required: true
+		required: false
 	},
 	chat_id: {
 		type: Number,
