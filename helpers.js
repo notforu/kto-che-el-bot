@@ -24,7 +24,7 @@ const listOfAbbreviations = [
 	'я'
 ];
 
-const phrasePrefixes = ['у меня', 'сёдня', 'я ел', 'добавилось', 'ел', 'поел'];
+const phrasePrefixes = ['', 'у меня', 'сёдня', 'я ел', 'добавилось', 'ел', 'поел'];
 
 const getPhrasePrefix = () => phrasePrefixes[getRandomInt(0, phrasePrefixes.length - 1)];
 
