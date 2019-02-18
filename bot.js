@@ -76,5 +76,10 @@ schedule.scheduleJob(randomDishRule, async function() {
 	}
 });
 
+const http = require("http");
+setInterval(function() {
+    http.get("http://desolate-headland-13968.herokuapp.com/");
+}, 300000);
+
 module.exports = bot;
 
