@@ -94,7 +94,7 @@ UserSchema.statics.getNonReportedUser = async function(chat_id) {
 	for (const user of users) {
 		const todayMessages = await user.getTodayMessages(chat_id);
 		if (!user.hasReportedToday(todayMessages)) {
-			notReportedUsers.push(usgetAllChatIdser);
+			notReportedUsers.push(user);
 		}
 	}
 
@@ -103,12 +103,9 @@ UserSchema.statics.getNonReportedUser = async function(chat_id) {
 
 UserSchema.statics.getAllChatIds = async function() {
 	const users = await this.find();
-	return users.reduce((acc, user) => {
-		if (!acc.includes(user.chat_id)) {
-			acc.push(user.chat_id);
-		}
-		return acc;
-	}, []);
+	return Object.keys(
+		users.reduce((acc, user) => { ...acc, [user.chat_id]: true }, {})
+	);
 }
 
 module.exports = mongoose.model('User', UserSchema);
