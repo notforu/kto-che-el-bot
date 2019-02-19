@@ -103,9 +103,12 @@ UserSchema.statics.getNonReportedUser = async function(chat_id) {
 
 UserSchema.statics.getAllChatIds = async function() {
 	const users = await this.find();
-	return Object.keys(
-		users.reduce((acc, user) => { ...acc, [user.chat_id]: true }, {})
-	);
+	return users.reduce((acc, user) => {
+		if (!acc.includes(user.chat_id)) {
+			acc.push(user.chat_id);
+		}
+		return acc;
+	}, []);
 }
 
 module.exports = mongoose.model('User', UserSchema);
