@@ -34,7 +34,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 	})
 
  
-const leafOfShameRule = new schedule.RecurrenceRule();
+/*const leafOfShameRule = new schedule.RecurrenceRule();
 leafOfShameRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
 leafOfShameRule.hour = 19;
 leafOfShameRule.minute = 00;
@@ -46,7 +46,7 @@ schedule.scheduleJob(leafOfShameRule, async function() {
 		const leafOfShame = await User.generateLeafOfShame(chatId);
 		bot.sendMessage(chatId, leafOfShame);
 	}
-});
+});*/
 
 const cheElRule = new schedule.RecurrenceRule();
 cheElRule.hour = 9;
