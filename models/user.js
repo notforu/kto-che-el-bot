@@ -47,7 +47,7 @@ UserSchema.methods.getTodayMessages = async function(chat_id) {
 	return Message.find({ chat_id, userId: this.id, date: { $gt: getStartOfTodayTimestamp() } });
 };
 
-UserSchema.methods.hasReportedToday = async function(todayMessages) {
+UserSchema.methods.hasReportedToday = function(todayMessages) {
 	return todayMessages.length > 0;
 };
 

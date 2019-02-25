@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}@cheel-shard-00-00-nuead.mongodb.net:27017,cheel-shard-00-01-nuead.mongodb.net:27017,cheel-shard-00-02-nuead.mongodb.net:27017/test?ssl=true&replicaSet=cheel-shard-0&authSource=admin&retryWrites=true`)
-	.then(() => {
+	.then(async () => {
 		console.log('Bot server started in the ' + process.env.NODE_ENV + ' mode');
 
 		bot.on('message', async (msg) => {
@@ -34,22 +34,22 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 	})
 
  
-/*const leafOfShameRule = new schedule.RecurrenceRule();
-leafOfShameRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-leafOfShameRule.hour = 19;
-leafOfShameRule.minute = 00;
-// leafOfShameRule.second = 10;
+const listOfShameRule = new schedule.RecurrenceRule();
+listOfShameRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+listOfShameRule.hour = 19;
+listOfShameRule.minute = 00;
+// listOfShameRule.second = 10;
  
-schedule.scheduleJob(leafOfShameRule, async function() {
+schedule.scheduleJob(listOfShameRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
 		const leafOfShame = await User.generateLeafOfShame(chatId);
 		bot.sendMessage(chatId, leafOfShame);
 	}
-});*/
+});
 
 const cheElRule = new schedule.RecurrenceRule();
-cheElRule.hour = 9;
+cheElRule.hour = 12;
 cheElRule.minute = 0;
 // cheElRule.second = 10;
  

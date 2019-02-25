@@ -42,6 +42,8 @@ const getRandomDishAbbreviation = () => {
 	return `${ingredientOne}${ingredientTwo}${ingredientThree}`;
 }
 
-const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.includes(cheEl));
+const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.toLowerCase().includes(cheEl));
 
-module.exports = { getRandomArrayElement, getRandomDishAbbreviation, cheEllable, getPhrasePrefix };
+const poyasniable = (message) => message.toLowerCase().includes('поясни')
+
+module.exports = { getRandomArrayElement, getRandomDishAbbreviation, cheEllable, getPhrasePrefix, poyasniable };
