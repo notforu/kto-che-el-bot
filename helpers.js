@@ -48,7 +48,7 @@ const getRandomDishAbbreviation = () => {
 
 const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.toLowerCase().includes(cheEl));
 
-const isReport = (message) => phrasePrefixes.some(prefix => message.toLowerCase().includes(prefix));
+const isReport = (message) => phrasePrefixes.filter(prefix => prefix !== '').some(prefix => message.toLowerCase().includes(prefix));
 
 const poyasniable = (message) => message.toLowerCase().includes('поясни');
 
