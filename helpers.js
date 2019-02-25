@@ -26,7 +26,11 @@ const listOfAbbreviations = [
 
 const phrasePrefixes = ['', 'у меня', 'сёдня', 'я ел', 'добавилось', 'ел', 'поел'];
 
+const respectMessages = ['уважаю', 'норм ел', 'респект', 'хорошо едите, друзья! всем большое спасибо!', 'ноооорм', 'неплохо ел, дружище', 'одобряю съеденное'];
+
 const getPhrasePrefix = () => phrasePrefixes[getRandomInt(0, phrasePrefixes.length - 1)];
+
+const generateRespectMessage = () => respectMessages[getRandomInt(0, respectMessages.length - 1)];
 
 const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -44,6 +48,8 @@ const getRandomDishAbbreviation = () => {
 
 const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.toLowerCase().includes(cheEl));
 
-const poyasniable = (message) => message.toLowerCase().includes('поясни')
+const isReport = (message) => phrasePrefixes.some(prefix => message.toLowerCase().includes(prefix));
 
-module.exports = { getRandomArrayElement, getRandomDishAbbreviation, cheEllable, getPhrasePrefix, poyasniable };
+const poyasniable = (message) => message.toLowerCase().includes('поясни');
+
+module.exports = { getRandomArrayElement, getRandomDishAbbreviation, getRandomInt, isReport, cheEllable, getPhrasePrefix, generateRespectMessage, poyasniable };

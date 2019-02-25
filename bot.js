@@ -3,7 +3,7 @@ const User = require('./models/user');
 const Message = require('./models/message');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
-const { getRandomDishAbbreviation, cheEllable, getPhrasePrefix } = require('./helpers');
+const { getRandomDishAbbreviation, cheEllable, getPhrasePrefix, isReport, getRandomInt, generateRespectMessage } = require('./helpers');
 
 const Bot = require('node-telegram-bot-api');
 let bot;
@@ -21,14 +21,19 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 
 		bot.on('message', async (msg) => {
 			console.log(msg);
+			const chat_id = String(msg.chat.id);
 
-			if (!await User.findOne({ id: msg.from.id, chat_id: msg.chat.id })) {
-				await User.create({ ...msg.from, chat_id: msg.chat.id });
+			if (!await User.findOne({ id: msg.from.id, chat_id })) {
+				await User.create({ ...msg.from, chat_id });
 			}
-			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id: msg.chat.id });
+			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id });
 
 			if (msg.text.includes('@CheElBot') && cheEllable(msg.text)) {
-				bot.sendMessage(msg.chat.id, `${getPhrasePrefix()} ${getRandomDishAbbreviation()}`);
+				bot.sendMessage(chat_id, `${getPhrasePrefix()} ${getRandomDishAbbreviation()}`);
+			}
+
+			if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
+				bot.sendMessage(chat_id, generateRespectMessage());
 			}
 		});
 	})

@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
 		required: false
 	},
 	chat_id: {
-		type: Number,
+		type: String,
 		required: true,
 	}
 });
@@ -69,7 +69,7 @@ UserSchema.statics.generateLeafOfShame = async function(chat_id) {
 	const bolognezeUsers = [];
 
 	for (const user of users) {
-		const todayMessages = await user.getTodayMessages();
+		const todayMessages = await user.getTodayMessages(chat_id);
 		if (!user.hasReportedToday(todayMessages)) {
 			notReportedUsers.push(user);
 		}
