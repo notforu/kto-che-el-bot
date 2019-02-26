@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
 const Message = require('./message');
-const { getRandomArrayElement } = require('../helpers');
+const { getRandomArrayElement, containsBologneze } = require('../helpers');
 
 const RESPECT_MESSAGE = 'Таких не заметил. На этот счет сегодня всем едокам респект!';
-
-const bolognezeSynonyms = ['болоньезе', 'болон', 'балон', 'балоньезе', 'баланьезе', 'боланьезе'];
-
-const containsBologneze = message => bolognezeSynonyms.some(synonym => message.text.toLowerCase().includes(synonym));
 
 const printNames = users => users.length > 0 ? users.map(user => user.getFullName()).join('\n') : RESPECT_MESSAGE;
 
@@ -63,7 +59,7 @@ UserSchema.methods.hasEatenBologneze = function(todayMessages) {
 	return !!todayMessages.find(message => containsBologneze(message));
 }
 
-UserSchema.statics.generateLeafOfShame = async function(chat_id) {
+UserSchema.statics.generateListOfShame = async function(chat_id) {
 	const users = await this.find({ chat_id });
 	const notReportedUsers = [];
 	const bolognezeUsers = [];
@@ -73,6 +69,7 @@ UserSchema.statics.generateLeafOfShame = async function(chat_id) {
 		if (!user.hasReportedToday(todayMessages)) {
 			notReportedUsers.push(user);
 		}
+
 		if (user.hasEatenBologneze(todayMessages)) {
 			bolognezeUsers.push(user);
 		}

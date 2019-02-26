@@ -3,7 +3,16 @@ const User = require('./models/user');
 const Message = require('./models/message');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
-const { getRandomDishAbbreviation, cheEllable, getPhrasePrefix, isReport, getRandomInt, generateRespectMessage } = require('./helpers');
+const {
+	getRandomDishAbbreviation,
+	cheEllable,
+	getPhrasePrefix,
+	isReport,
+	getRandomInt,
+	generateRespectMessage,
+	generateDisrespectMessage,
+	containsBologneze
+} = require('./helpers');
 
 const Bot = require('node-telegram-bot-api');
 let bot;
@@ -35,9 +44,12 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 			if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
 				bot.sendMessage(chat_id, generateRespectMessage());
 			}
+
+			if (containsBologneze(msg.text)) {
+				bot.sendMessage(chat_id, generateDisrespectMessage());
+			}
 		});
 	})
-
  
 const listOfShameRule = new schedule.RecurrenceRule();
 listOfShameRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
@@ -48,7 +60,7 @@ listOfShameRule.minute = 00;
 schedule.scheduleJob(listOfShameRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
-		const leafOfShame = await User.generateLeafOfShame(chatId);
+		const leafOfShame = await User.generateListOfShame(chatId);
 		bot.sendMessage(chatId, leafOfShame);
 	}
 });

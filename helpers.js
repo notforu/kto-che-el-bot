@@ -28,9 +28,13 @@ const phrasePrefixes = ['', 'у меня', 'сёдня', 'я ел', 'добав�
 
 const respectMessages = ['уважаю', 'норм ел', 'респект', 'хорошо едите, друзья! всем большое спасибо!', 'ноооорм', 'неплохо ел, дружище', 'одобряю съеденное'];
 
-const getPhrasePrefix = () => phrasePrefixes[getRandomInt(0, phrasePrefixes.length - 1)];
+const disrespectMessages = ['за болон неуважение', 'Мде.', 'дизреспект'];
 
-const generateRespectMessage = () => respectMessages[getRandomInt(0, respectMessages.length - 1)];
+const getPhrasePrefix = () => getRandomArrayElement(phrasePrefixes);
+
+const generateRespectMessage = () => getRandomArrayElement(respectMessages);
+
+const generateDisrespectMessage = () => getRandomArrayElement(disrespectMessages);
 
 const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -56,4 +60,19 @@ const isReport = (message) => ['ела', 'поела', 'были', 'сегодн
 
 const poyasniable = (message) => message.toLowerCase().includes('поясни');
 
-module.exports = { getRandomArrayElement, getRandomDishAbbreviation, getRandomInt, isReport, cheEllable, getPhrasePrefix, generateRespectMessage, poyasniable };
+const bolognezeSynonyms = ['болоньезе', 'болон', 'балон', 'балоньезе', 'баланьезе', 'боланьезе'];
+
+const containsBologneze = message => bolognezeSynonyms.some(synonym => message.text.toLowerCase().includes(synonym));
+
+module.exports = {
+	getRandomArrayElement,
+	getRandomDishAbbreviation,
+	getRandomInt,
+	isReport,
+	cheEllable,
+	getPhrasePrefix,
+	generateRespectMessage,
+	generateDisrespectMessage,
+	poyasniable,
+	containsBologneze
+};
