@@ -50,6 +50,7 @@ const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(c
 
 const isReport = (message) => ['ела', 'поела', 'были', 'сегодня']
 	.concat(phrasePrefixes)
+	.concat(listOfAbbreviations.filter(abbreviation => abbreviation.length > 1))
 	.filter(prefix => prefix !== '')
 	.some(prefix => message.toLowerCase().includes(prefix));
 
