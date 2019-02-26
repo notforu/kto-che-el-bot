@@ -45,7 +45,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 				bot.sendMessage(chat_id, generateRespectMessage());
 			}
 
-			if (containsBologneze(msg.text)) {
+			if (containsBologneze(msg)) {
 				bot.sendMessage(chat_id, generateDisrespectMessage());
 			}
 		});
