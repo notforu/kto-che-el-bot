@@ -38,14 +38,18 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id });
 
 			if (msg.text.includes('@CheElBot') && cheEllable(msg.text)) {
-				bot.sendMessage(chat_id, `${getPhrasePrefix()} ${getRandomDishAbbreviation()}`);
+				let message = `${getPhrasePrefix()} ${getRandomDishAbbreviation()}`;
+				if (getRandomInt(0, 2) > 0) {
+					message += ' на тарелке';
+				}
+				bot.sendMessage(chat_id, message);
 			}
 
 			if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
 				bot.sendMessage(chat_id, generateRespectMessage());
 			}
 
-			if (containsBologneze(msg)) {
+			if (containsBologneze(msg.text)) {
 				bot.sendMessage(chat_id, generateDisrespectMessage());
 			}
 		});
@@ -60,8 +64,8 @@ listOfShameRule.minute = 00;
 schedule.scheduleJob(listOfShameRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
-		const leafOfShame = await User.generateListOfShame(chatId);
-		bot.sendMessage(chatId, leafOfShame);
+		const listOfShame = await User.generateListOfShame(chatId);
+		bot.sendMessage(chatId, listOfShame);
 	}
 });
 
