@@ -45,10 +45,10 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 				}
 				bot.sendMessage(chat_id, message);
 			} else if (!isBot) {
-				if (isReport(msg.text) && getRandomInt(0, 20) > 17 && !isBot) {
+				if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
 					bot.sendMessage(chat_id, generateRespectMessage());
 				}
-				if (containsBologneze(msg) && !isBot) {
+				if (containsBologneze(msg)) {
 					bot.sendMessage(chat_id, generateDisrespectMessage());
 				}
 			}
