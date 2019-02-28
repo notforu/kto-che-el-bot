@@ -31,6 +31,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 		bot.on('message', async (msg) => {
 			console.log(msg);
 			const chat_id = String(msg.chat.id);
+			const isBot = msg.from.is_bot;
 
 			if (!await User.findOne({ id: msg.from.id, chat_id })) {
 				await User.create({ ...msg.from, chat_id });
@@ -45,11 +46,11 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 				bot.sendMessage(chat_id, message);
 			}
 
-			if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
+			if (isReport(msg.text) && getRandomInt(0, 20) > 17 && !isBot) {
 				bot.sendMessage(chat_id, generateRespectMessage());
 			}
 
-			if (containsBologneze(msg.text)) {
+			if (containsBologneze(msg.text) && !isBot) {
 				bot.sendMessage(chat_id, generateDisrespectMessage());
 			}
 		});
