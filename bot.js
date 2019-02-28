@@ -44,15 +44,15 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 					message += ' на тарелке';
 				}
 				bot.sendMessage(chat_id, message);
+			} else if (!isBot) {
+				if (isReport(msg.text) && getRandomInt(0, 20) > 17 && !isBot) {
+					bot.sendMessage(chat_id, generateRespectMessage());
+				}
+				if (containsBologneze(msg) && !isBot) {
+					bot.sendMessage(chat_id, generateDisrespectMessage());
+				}
 			}
-
-			if (isReport(msg.text) && getRandomInt(0, 20) > 17 && !isBot) {
-				bot.sendMessage(chat_id, generateRespectMessage());
-			}
-
-			if (containsBologneze(msg.text) && !isBot) {
-				bot.sendMessage(chat_id, generateDisrespectMessage());
-			}
+			
 		});
 	})
  
