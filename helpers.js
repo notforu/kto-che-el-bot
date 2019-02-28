@@ -50,7 +50,7 @@ const getRandomDishAbbreviation = () => {
 	return `${ingredientOne}${ingredientTwo}${ingredientThree}`;
 }
 
-const cheEllable = (message) => ['че ел', 'что ел', 'чо ел'].some(cheEl => message.toLowerCase().includes(cheEl));
+const cheEllable = (message) => ['че ел', 'что ел', 'чо ел', 'чё ел'].some(cheEl => message.toLowerCase().includes(cheEl));
 
 const isReport = (message) => ['ела', 'поела', 'были', 'сегодня']
 	.concat(phrasePrefixes)
