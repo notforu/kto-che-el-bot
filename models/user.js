@@ -48,7 +48,7 @@ UserSchema.methods.hasReportedToday = function(todayMessages) {
 };
 
 UserSchema.methods.getFullName = function() {
-	return `${this.first_name} ${this.last_name}`;
+	return [this.first_name, this.last_name].join(' ');
 }
 
 UserSchema.methods.generateCheElMessage = function() {
