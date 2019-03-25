@@ -52,7 +52,7 @@ UserSchema.methods.getFullName = function() {
 }
 
 UserSchema.methods.generateCheElMessage = function() {
-	return `${this.getFullName()}, че ел?!`;
+	return `${this.getFullName()}, что ел седня?)`;
 }
 
 UserSchema.methods.hasEatenBologneze = function(todayMessages) {
@@ -75,10 +75,10 @@ UserSchema.statics.generateListOfShame = async function(chat_id) {
 		}
 	}
 
-	const nonReportedTitle = 'Лист позора!!!\n\nНе отчитались о съеденном:\n';
+	const nonReportedTitle = 'Лист позора\n\nНе отчитались о съеденном:\n';
 	const nonReportedBody = printNames(notReportedUsers);
 	
-	const bolognezeTitle = '\n\nЕли болоньзе)):\n';
+	const bolognezeTitle = '\n\nЕли болоньзе:\n';
 	const bolognezeBody = printNames(bolognezeUsers);
 
 	return nonReportedTitle + nonReportedBody + bolognezeTitle + bolognezeBody;

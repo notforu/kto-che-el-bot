@@ -1,32 +1,34 @@
 const getRandomArrayElement = array => array[ Math.floor(Math.random() * (array.length)) ];
 
-const listOfAbbreviations = [
-	'б',
-	'бут',
-	'бцп',
-	'г',
-	'йог',
-	'к',
-	'карт',
-	'колб',
-	'м',
-	'н',
-	'огур',
-	'пом',
-	'с',
-	'серв',
-	'сос',
-	'ссп',
-	'твор',
-	'фас',
-	'чм',
-	'х',
-	'я'
-];
+const dictionary = {
+	'б': 'бекон',
+	'бут': 'бутерброд',
+	'бцп': 'блинчики царское подворье',
+	'г': 'греча',
+	'йог': 'йогурт',
+	'к': 'кура',
+	'карт': 'картофель',
+	'колб': 'колбаса',
+	'м': 'макароны',
+	'н': 'наггетсы',
+	'огур': 'огурцы',
+	'пом': 'ПОМ',
+	'с': 'с',
+	'серв': 'сервелат',
+	'сос': 'сосиски',
+	'ссп': 'столбы + солянка + пицца',
+	'твор': 'творог',
+	'фас': 'фасоль',
+	'чм': 'чачжан мён',
+	'х': 'хлеб',
+	'я': 'яйца'
+};
+
+const listOfAbbreviations = Object.keys(dictionary);
 
 const phrasePrefixes = ['', 'у меня', 'сёдня', 'я ел', 'добавилось', 'ел', 'поел'];
 
-const respectMessages = ['уважаю', 'норм ел', 'респект', 'хорошо едите, друзья! всем большое спасибо!', 'ноооорм', 'неплохо ел, дружище', 'одобряю съеденное'];
+const respectMessages = ['уважаю', 'норм ел', 'респект', 'хорошо едите, друзья! всем большое спасибо!', 'норм', 'неплохо ел, дружище', 'одобряю съеденное', 'понял', 'принято'];
 
 const disrespectMessages = ['за болон неуважение', 'Мде.', 'дизреспект'];
 
@@ -47,7 +49,7 @@ const getRandomDishAbbreviation = () => {
 	const ingredientOne = listOfAbbreviations[getRandomInt(0, max)];
 	const ingredientTwo = listOfAbbreviations[getRandomInt(0, max)];
 	const ingredientThree = listOfAbbreviations[getRandomInt(0, max)];
-	return `${ingredientOne}${ingredientTwo}${ingredientThree}`;
+	return [ingredientOne, ingredientTwo, ingredientThree];
 }
 
 const cheEllable = (message) => ['че ел', 'что ел', 'чо ел', 'чё ел'].some(cheEl => message.toLowerCase().includes(cheEl));
@@ -64,6 +66,8 @@ const bolognezeSynonyms = ['болоньезе', 'болон', 'балон', 'б
 
 const containsBologneze = message => bolognezeSynonyms.some(synonym => message.text.toLowerCase().includes(synonym));
 
+const getExplanation = (phrase) => phrase.map(word => dictionary[word]).join(' + ');
+
 module.exports = {
 	getRandomArrayElement,
 	getRandomDishAbbreviation,
@@ -74,5 +78,6 @@ module.exports = {
 	generateRespectMessage,
 	generateDisrespectMessage,
 	poyasniable,
+	getExplanation,
 	containsBologneze
 };

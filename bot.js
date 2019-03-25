@@ -8,10 +8,13 @@ const {
 	cheEllable,
 	getPhrasePrefix,
 	isReport,
+	getExplanation,
+	poyasniable,
 	getRandomInt,
 	generateRespectMessage,
 	generateDisrespectMessage,
-	containsBologneze
+	containsBologneze,
+	dictionary
 } = require('./helpers');
 
 const Bot = require('node-telegram-bot-api');
@@ -23,6 +26,8 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   	bot = new Bot(token, { polling: true });
 }
+
+let lastPhrase = null;
 
 mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}@cheel-shard-00-00-nuead.mongodb.net:27017,cheel-shard-00-01-nuead.mongodb.net:27017,cheel-shard-00-02-nuead.mongodb.net:27017/test?ssl=true&replicaSet=cheel-shard-0&authSource=admin&retryWrites=true`)
 	.then(async () => {
@@ -38,13 +43,19 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 			}
 			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id });
 
-			if (msg.text.includes('@CheElBot') && cheEllable(msg.text)) {
-				let message = `${getPhrasePrefix()} ${getRandomDishAbbreviation()}`;
-				if (getRandomInt(0, 2) > 1) {
-					message += ' на тарелке';
+			if (msg.text.includes('@CheElBot')) {
+				if (cheEllable(msg.text)) {
+					lastPhrase = getRandomDishAbbreviation();
+					let message = `${getPhrasePrefix()} ${getRandomDishAbbreviation().join('')}`;
+					if (getRandomInt(0, 2) > 1) {
+						message += ' на тарелке';
+					}
+					bot.sendMessage(chat_id, message);
 				}
-				bot.sendMessage(chat_id, message);
-			} else if (!isBot) {
+				if (poyasniable(msg.text) && lastPhrase) {
+					bot.sendMessage(chat_id, getExplanation(lastPhrase))
+				}
+			} else if () else if (!isBot) {
 				if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
 					bot.sendMessage(chat_id, generateRespectMessage());
 				}
