@@ -55,7 +55,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 				if (poyasniable(msg.text) && lastPhrase) {
 					bot.sendMessage(chat_id, getExplanation(lastPhrase))
 				}
-			} else if () else if (!isBot) {
+			} else if (!isBot) {
 				if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
 					bot.sendMessage(chat_id, generateRespectMessage());
 				}
