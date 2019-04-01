@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
   	bot = new Bot(token, { polling: true });
 }
 
-let lastPhrase = null;
+let lastPhrases = {};
 
 mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}@cheel-shard-00-00-nuead.mongodb.net:27017,cheel-shard-00-01-nuead.mongodb.net:27017,cheel-shard-00-02-nuead.mongodb.net:27017/test?ssl=true&replicaSet=cheel-shard-0&authSource=admin&retryWrites=true`)
 	.then(async () => {
@@ -45,15 +45,15 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 
 			if (msg.text.includes('@CheElBot')) {
 				if (cheEllable(msg.text)) {
-					lastPhrase = getRandomDishAbbreviation();
-					let message = `${getPhrasePrefix()} ${lastPhrase.join('')}`;
+					lastPhrases[chat_id] = getRandomDishAbbreviation();
+					let message = `${getPhrasePrefix()} ${lastPhrases[chat_id].join('')}`;
 					if (getRandomInt(0, 2) > 1) {
 						message += ' на тарелке';
 					}
 					bot.sendMessage(chat_id, message);
 				}
 				if (poyasniable(msg.text) && lastPhrase) {
-					bot.sendMessage(chat_id, getExplanation(lastPhrase))
+					bot.sendMessage(chat_id, getExplanation(lastPhrases[chat_id]))
 				}
 			} else if (!isBot) {
 				if (isReport(msg.text) && getRandomInt(0, 20) > 17) {
@@ -105,7 +105,8 @@ randomDishRule.minute = 00;
 schedule.scheduleJob(randomDishRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
-		bot.sendMessage(chatId, getRandomDishAbbreviation());
+		lastPhrases[chatId] = getRandomDishAbbreviation();
+		bot.sendMessage(chatId, lastPhrases[chatId]);
 	}
 });
 
