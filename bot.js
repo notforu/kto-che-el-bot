@@ -46,7 +46,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 			if (msg.text.includes('@CheElBot')) {
 				if (cheEllable(msg.text)) {
 					lastPhrase = getRandomDishAbbreviation();
-					let message = `${getPhrasePrefix()} ${getRandomDishAbbreviation().join('')}`;
+					let message = `${getPhrasePrefix()} ${lastPhrase.join('')}`;
 					if (getRandomInt(0, 2) > 1) {
 						message += ' на тарелке';
 					}
