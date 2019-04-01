@@ -52,7 +52,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 					}
 					bot.sendMessage(chat_id, message);
 				}
-				if (poyasniable(msg.text) && lastPhrase) {
+				if (poyasniable(msg.text) && lastPhrases[chat_id]) {
 					bot.sendMessage(chat_id, getExplanation(lastPhrases[chat_id]))
 				}
 			} else if (!isBot) {
