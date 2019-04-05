@@ -106,7 +106,7 @@ schedule.scheduleJob(randomDishRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
 		lastPhrases[chatId] = getRandomDishAbbreviation();
-		bot.sendMessage(chatId, lastPhrases[chatId]);
+		bot.sendMessage(chatId, lastPhrases[chatId].join(''));
 	}
 });
 
