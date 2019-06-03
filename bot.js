@@ -67,7 +67,7 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 		});
 	})
  
-const listOfShameRule = new schedule.RecurrenceRule();
+/*const listOfShameRule = new schedule.RecurrenceRule();
 listOfShameRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
 listOfShameRule.hour = 19;
 listOfShameRule.minute = 00;
@@ -79,7 +79,7 @@ schedule.scheduleJob(listOfShameRule, async function() {
 		const listOfShame = await User.generateListOfShame(chatId);
 		bot.sendMessage(chatId, listOfShame);
 	}
-});
+});*/
 
 const cheElRule = new schedule.RecurrenceRule();
 cheElRule.hour = 12;
