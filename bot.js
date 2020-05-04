@@ -29,6 +29,9 @@ if (process.env.NODE_ENV === 'production') {
 
 let lastPhrases = {};
 
+const BACKDOOR_CHAT_ID = -237904062;
+const KTO_CHE_EL_CHAT_ID = -1001219982738;
+
 mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}@cheel-shard-00-00-nuead.mongodb.net:27017,cheel-shard-00-01-nuead.mongodb.net:27017,cheel-shard-00-02-nuead.mongodb.net:27017/test?ssl=true&replicaSet=cheel-shard-0&authSource=admin&retryWrites=true`)
 	.then(async () => {
 		console.log('Bot server started in the ' + process.env.NODE_ENV + ' mode');
@@ -44,6 +47,10 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 				}
 				await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id });
 			} catch (e) {}
+
+			if (msg.chat.id === BACKDOOR_CHAT_ID) {
+				bot.sendMessage(KTO_CHE_EL_CHAT_ID, msg.text);
+			}
 
 			if (msg.text.includes('@CheElBot')) {
 				if (cheEllable(msg.text)) {
@@ -65,7 +72,6 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 					bot.sendMessage(chat_id, generateDisrespectMessage());
 				}
 			}
-
 		});
 	})
 
