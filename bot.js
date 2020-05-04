@@ -38,10 +38,12 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 			const chat_id = String(msg.chat.id);
 			const isBot = msg.from.is_bot;
 
-			if (!await User.findOne({ id: msg.from.id, chat_id })) {
-				await User.create({ ...msg.from, chat_id });
-			}
-			await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id });
+			try {
+				if (!await User.findOne({ id: msg.from.id, chat_id })) {
+					await User.create({ ...msg.from, chat_id });
+				}
+				await Message.create({ id: msg.message_id, userId: msg.from.id, date: msg.date, text: msg.text, chat_id });
+			} catch (e) {}
 
 			if (msg.text.includes('@CheElBot')) {
 				if (cheEllable(msg.text)) {
@@ -63,16 +65,16 @@ mongoose.connect(`mongodb://cheelUser:${encodeURIComponent(process.env.db_pass)}
 					bot.sendMessage(chat_id, generateDisrespectMessage());
 				}
 			}
-			
+
 		});
 	})
- 
+
 /*const listOfShameRule = new schedule.RecurrenceRule();
 listOfShameRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
 listOfShameRule.hour = 19;
 listOfShameRule.minute = 00;
 // listOfShameRule.second = 10;
- 
+
 schedule.scheduleJob(listOfShameRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
@@ -85,7 +87,7 @@ const cheElRule = new schedule.RecurrenceRule();
 cheElRule.hour = 12;
 cheElRule.minute = 0;
 // cheElRule.second = 10;
- 
+
 schedule.scheduleJob(cheElRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
@@ -101,7 +103,7 @@ randomDishRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
 randomDishRule.hour = 15;
 randomDishRule.minute = 00;
 // randomDishRule.second = 10;
- 
+
 schedule.scheduleJob(randomDishRule, async function() {
 	const chatIds = await User.getAllChatIds();
 	for (const chatId of chatIds) {
